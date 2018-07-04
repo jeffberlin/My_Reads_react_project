@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import serializeForm from 'form-serialize'
+import sortBy from 'sort-by'
+import escapeRegExp from 'escape-string-regexp'
 
 class  SearchBooks extends Component {
+  static propTypes = {
+    books: PropTypes.array.isRequired
+  }
   state = {
     query: ''
   }
@@ -17,15 +23,15 @@ class  SearchBooks extends Component {
 
   render() {
     const { query } = this.state
-
+    const { books } = this.props
 
     return (
       <div className='search-books'>
         <div className='search-books-bar'>
           <Link
-            to='/'
             className='close-search'
-          />
+            to='/'
+          >Close</Link>
           <div className='search-books-input-wrapper'>
             <input
               type='text'

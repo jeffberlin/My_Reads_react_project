@@ -34,8 +34,10 @@ class BooksApp extends Component {
             books={this.state.books}
           />
         )} />
-        <Route path='/searh' render={() => (
-          <SearchBooks />
+        <Route path='/search' render={() => (
+          <SearchBooks
+            books={this.state.books}
+          />
         )} />
       </div>
 
