@@ -24,6 +24,11 @@ class  SearchBooks extends Component {
   render() {
     const { query } = this.state
     const { books } = this.props
+    const showingBooks = query === ''
+      ? books
+      : books.filter((b) => (
+        b.title.toLowerCase().includes(query.toLowerCase())
+      ))
 
     return (
       <div className='search-books'>
@@ -37,6 +42,7 @@ class  SearchBooks extends Component {
               type='text'
               placeholder='Search by title or author'
               value={query}
+              onChange={(event) => this.updateQuery(event.target.value)}
             />
           </div>
         </div>
