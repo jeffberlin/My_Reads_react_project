@@ -24,10 +24,11 @@ class  SearchBooks extends Component {
   render() {
     const { query } = this.state
     const { books } = this.props
+    const match = new RegExp(escapeRegExp(query), 'i')
     const showingBooks = query === ''
       ? books
       : books.filter((b) => (
-        b.title.toLowerCase().includes(query.toLowerCase())
+        match.test(b.title)||match.test(b.authors)
       ))
 
     return (
