@@ -9,7 +9,7 @@ import * as BooksAPI from './BooksAPI'
 class  SearchBooks extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    onChangeShelf: PropTypes.func.isRequired
+    //onChangeShelf: PropTypes.func.isRequired
   }
   state = {
     query: ''
@@ -57,6 +57,9 @@ class  SearchBooks extends Component {
               onChange={(event) => this.updateQuery(event.target.value)}
             />
           </div>
+        </div>
+        <div className='search-books-results'>
+          <ol className='books-grid'></ol>
         </div>
       </div>
     )
