@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom'
 import serializeForm from 'form-serialize'
 import sortBy from 'sort-by'
 import escapeRegExp from 'escape-string-regexp'
+import * as BooksAPI from './BooksAPI'
 
 class  SearchBooks extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onChangeShelf: PropTypes.func.isRequired
   }
   state = {
     query: ''
@@ -21,9 +23,18 @@ class  SearchBooks extends Component {
     this.updateQuery('')
   }
 
+  componentDidMount() {
+    BooksAPI.getAll()
+      .then((books) => {
+        this.setState(() => ({
+          books
+        }))
+      })
+  }
+
   render() {
     const { query } = this.state
-    const { books } = this.props
+    const { books, onChangeShelf } = this.props
     const match = new RegExp(escapeRegExp(query), 'i')
     const showingBooks = query === ''
       ? books

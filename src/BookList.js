@@ -5,11 +5,11 @@ import { Link } from 'react-router-dom'
 // This page handles the listing of the books on their chosen shelves
 class BookList extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onChangeShelf: PropTypes.func.isRequired
   }
   render() {
-    const { books } = this.props
-    //const showingBooks =
+    const { books, onChangeShelf } = this.props
 
     return (
       <div className='list-books'>
