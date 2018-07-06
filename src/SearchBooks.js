@@ -1,18 +1,18 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import serializeForm from 'form-serialize'
 import sortBy from 'sort-by'
-import escapeRegExp from 'escape-string-regexp'
 import * as BooksAPI from './BooksAPI'
+import Book from './Book'
 
 class  SearchBooks extends Component {
   static propTypes = {
     books: PropTypes.array.isRequired,
-    //onChangeShelf: PropTypes.func.isRequired
+    onChangeShelf: PropTypes.func.isRequired
   }
   state = {
-    query: ''
+    query: '',
+    books: []
   }
   updateQuery = (query) => {
     this.setState(() => ({
@@ -33,15 +33,6 @@ class  SearchBooks extends Component {
   }
 
   render() {
-    const { query } = this.state
-    const { books, onChangeShelf } = this.props
-    const match = new RegExp(escapeRegExp(query), 'i')
-    const showingBooks = query === ''
-      ? books
-      : books.filter((b) => (
-        match.test(b.title)||match.test(b.authors)
-      ))
-
     return (
       <div className='search-books'>
         <div className='search-books-bar'>
@@ -53,13 +44,20 @@ class  SearchBooks extends Component {
             <input
               type='text'
               placeholder='Search by title or author'
-              value={query}
               onChange={(event) => this.updateQuery(event.target.value)}
             />
           </div>
         </div>
         <div className='search-books-results'>
-          <ol className='books-grid'></ol>
+          <ol className='books-grid'>
+            {this.state.books.sort(sortBy('title')).map(book => (
+              <Book
+                onChangeShelf={this.props.onChangeShelf}
+                key={book.id}
+                book={book}
+              />
+            ))}
+          </ol>
         </div>
       </div>
     )
