@@ -33,6 +33,15 @@ class  SearchBooks extends Component {
   }
 
   render() {
+    const { query } = this.state
+    const { books } = this.props
+
+    const showingBooks = query === ''
+      ? books
+      : books.filter((b) => (
+        b.title.toLowerCase().includes(query.toLowerCase())
+      ))
+
     return (
       <div className='search-books'>
         <div className='search-books-bar'>
@@ -43,6 +52,7 @@ class  SearchBooks extends Component {
           <div className='search-books-input-wrapper'>
             <input
               type='text'
+              value={query}
               placeholder='Search by title or author'
               onChange={(event) => this.updateQuery(event.target.value)}
             />
@@ -50,7 +60,7 @@ class  SearchBooks extends Component {
         </div>
         <div className='search-books-results'>
           <ol className='books-grid'>
-            {this.state.books.sort(sortBy('title')).map(book => (
+            {showingBooks.map(book => (
               <Book
                 onChangeShelf={this.props.onChangeShelf}
                 key={book.id}
