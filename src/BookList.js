@@ -24,31 +24,32 @@ class BookList extends Component {
       <div className='list-books'>
         <div className='list-books-title'>
           <h1>My Reads</h1>
-          {bookShelf.map((shelf, index) => {
-          <div key={index} className="list-books-content">
-            <div>
-              <div className="bookshelf">
-                <h2 className="bookshelf-title">{shelfName[index]}</h2>
-                <div className="bookshelf-books">
-                  <ol className="books-grid">
-                    {books.sort(sortBy('title')).filter(book => book.shelf === shelf).map(book => (
-                      <Book
-                        onChangeShelf={this.props.onChangeShelf}
-                        key={book.id}
-                        book={book}
-                      />
-                    ))}
-                  </ol>
-                </div>
+        </div>
+        {bookShelf.map((shelf, index) => {
+          return(
+        <div key={index} className="list-books-content">
+          <div>
+            <div className="bookshelf">
+              <h2 className="bookshelf-title">{shelfName[index]}</h2>
+              <div className="bookshelf-books">
+                <ol className="books-grid">
+                  {books.sort(sortBy('title')).filter(book => book.shelf === shelf).map(book => (
+                    <Book
+                      onChangeShelf={this.props.onChangeShelf}
+                      key={book.id}
+                      book={book}
+                    />
+                  ))}
+                </ol>
               </div>
             </div>
           </div>
-          })}
-          <div className='open-search'>
-            <Link
-              to='/search'>Add a book>
-            </Link>
-          </div>
+        </div>
+        )})}
+        <div className='open-search'>
+          <Link
+            to='/search'>Add a book>
+          </Link>
         </div>
       </div>
     )
