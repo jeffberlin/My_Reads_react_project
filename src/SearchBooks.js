@@ -17,7 +17,7 @@ class  SearchBooks extends Component {
   }
   updateQuery = (query) => {
     this.setState(() => ({
-      query: query.trim()
+      query: query
     }))
   }
   clearQuery = () => {
@@ -57,9 +57,9 @@ class  SearchBooks extends Component {
           >Close</Link>
           <div className='search-books-input-wrapper'>
             <input
-              type="text"
+              type='text'
               value={query}
-              placeholder="Search by title or author"
+              placeholder='Search by title or author'
               onChange={(event) => this.updateQuery(event.target.value)}
             />
           </div>
