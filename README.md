@@ -1,4 +1,4 @@
-#MyReads Udacity React Project
+# MyReads Udacity React Project
 
 This is a page that allows to search for books via the Udacity API/server and select which 'shelf' to put the book on!
 
