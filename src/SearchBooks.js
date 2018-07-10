@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import sortBy from 'sort-by'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
+import escapeRegExp from 'escape-string-regexp'
 
 class  SearchBooks extends Component {
   static propTypes = {
@@ -35,12 +36,17 @@ class  SearchBooks extends Component {
   render() {
     const { query } = this.state
     const { books } = this.props
+    const match = new RegExp(escapeRegExp(query), 'i')
 
     const showingBooks = query === ''
+      // ? books
+      // : books.filter((b) => (
+      //   b.title.toLowerCase().includes(query.toLowerCase())
       ? books
-      : books.filter((b) => (
-        b.title.toLowerCase().includes(query.toLowerCase())
-      ))
+      : books.filter((book) => match.test(book.title)||match.test(book.authors))
+      //))
+
+      showingBooks.sort(sortBy('title'))
 
     return (
       <div className='search-books'>
@@ -53,7 +59,7 @@ class  SearchBooks extends Component {
             <input
               type='text'
               value={query}
-              placeholder='Search by title or author'
+              placeholder="Search by title or author"
               onChange={(event) => this.updateQuery(event.target.value)}
             />
           </div>
