@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import sortBy from 'sort-by'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
-import escapeRegExp from 'escape-string-regexp'
 
 class  SearchBooks extends Component {
   static propTypes = {
@@ -16,37 +15,24 @@ class  SearchBooks extends Component {
     books: []
   }
   updateQuery = (query) => {
-    this.setState(() => ({
-      query: query
-    }))
-  }
-  clearQuery = () => {
-    this.updateQuery('')
-  }
-
-  componentDidMount() {
-    BooksAPI.getAll()
-      .then((books) => {
-        this.setState(() => ({
-          books
-        }))
+    if (!query) {
+      this.setState({ query: '', books: [] })
+    } else {
+      this.setState({ query: query.trim() })
+      BooksAPI.search(query).then((books) => {
+        if (books.error) {
+          books = []
+        }
+        books.map(book => (this.props.books.filter((b) => b.id === book.id).map(b => book.shelf = b.shelf)))
+        this.setState({ books })
       })
+    }
   }
 
   render() {
     const { query } = this.state
-    const { books } = this.props
-    const match = new RegExp(escapeRegExp(query), 'i')
 
-    const showingBooks = query === ''
-      // ? books
-      // : books.filter((b) => (
-      //   b.title.toLowerCase().includes(query.toLowerCase())
-      ? books
-      : books.filter((book) => match.test(book.title)||match.test(book.authors))
-      //))
-
-      showingBooks.sort(sortBy('title'))
+    this.state.books.sort(sortBy('title'))
 
     return (
       <div className='search-books'>
@@ -58,7 +44,7 @@ class  SearchBooks extends Component {
           <div className='search-books-input-wrapper'>
             <input
               type='text'
-              value={query}
+              //value={query}
               placeholder='Search by title or author'
               onChange={(event) => this.updateQuery(event.target.value)}
             />
@@ -66,7 +52,7 @@ class  SearchBooks extends Component {
         </div>
         <div className='search-books-results'>
           <ol className='books-grid'>
-            {showingBooks.map(book => (
+            {this.state.books.map(book => (
               <Book
                 onChangeShelf={this.props.onChangeShelf}
                 key={book.id}
