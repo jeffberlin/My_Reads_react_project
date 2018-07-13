@@ -31,7 +31,6 @@ class  SearchBooks extends Component {
   }
 
   render() {
-    //const { query } = this.state
     this.state.books.sort(sortBy('title'))
 
     return (
@@ -44,7 +43,6 @@ class  SearchBooks extends Component {
           <div className='search-books-input-wrapper'>
             <input
               type='text'
-              //value={query}
               placeholder='Search by title or author'
               onChange={(event) => this.updateQuery(event.target.value)}
             />
