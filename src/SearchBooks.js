@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import sortBy from 'sort-by'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
-//import {DebounceInput} from 'react-debounce-input'
 
+// This page handles the search page
 class  SearchBooks extends Component {
   static propTypes = {
     books: PropTypes.array,

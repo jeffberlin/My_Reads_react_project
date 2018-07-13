@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+// This page handles the book info (default values)
 class Book extends Component {
 
   static propTypes = {
