@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom'
 import sortBy from 'sort-by'
 import * as BooksAPI from './BooksAPI'
 import Book from './Book'
+//import {DebounceInput} from 'react-debounce-input'
 
 class  SearchBooks extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired,
+    books: PropTypes.array,
     onChangeShelf: PropTypes.func.isRequired
   }
   state = {
@@ -30,8 +31,7 @@ class  SearchBooks extends Component {
   }
 
   render() {
-    const { query } = this.state
-
+    //const { query } = this.state
     this.state.books.sort(sortBy('title'))
 
     return (
